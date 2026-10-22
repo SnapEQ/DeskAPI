@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: changes/001-create-floor-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/002-create-desk-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/003-create-reservation-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/004-reservation-unique-active-booking.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changes/005-reservation-unique-user-date-booked.yaml
+      relativeToChangelogFile: true

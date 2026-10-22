@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-reservation-table
+      author: WojciechBinkowski
+      changes:
+        - createTable:
+            tableName: reservation
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_reservation
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: desk_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_reservation_desk
+                    references: desk(id)
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reservation_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cancelled_at
+                  type: timestamp with time zone
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: reservation
+            indexName: idx_reservation_desk_id
+            columns:
+              - column:
+                  name: desk_id
+        - createIndex:
+            tableName: reservation
+            indexName: idx_reservation_user_id
+            columns:
+              - column:
+                  name: user_id
+        - sql:
+            sql: ALTER TABLE reservation ADD CONSTRAINT ck_reservation_status CHECK (status IN ('BOOKED', 'CANCELLED'))
+        - sql:
+            sql: ALTER TABLE reservation ADD CONSTRAINT ck_reservation_cancelled_at CHECK ((status = 'CANCELLED') = (cancelled_at IS NOT NULL))
+      rollback:
+        - dropTable:
+            tableName: reservation

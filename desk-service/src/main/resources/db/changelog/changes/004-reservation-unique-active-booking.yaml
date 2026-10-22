@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-reservation-unique-active-booking
+      author: WojciechBinkowski
+      changes:
+        - sql:
+            sql: |
+              CREATE UNIQUE INDEX uq_reservation_desk_date_booked
+              ON reservation (desk_id, reservation_date)
+              WHERE status = 'BOOKED'
+      rollback:
+        - sql:
+            sql: DROP INDEX uq_reservation_desk_date_booked

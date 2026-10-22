@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-floor-table
+      author: WojciechBinkowski
+      changes:
+        - createTable:
+            tableName: floor
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_floor
+              - column:
+                  name: number
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uq_floor_number
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: ALTER TABLE floor ADD CONSTRAINT ck_floor_status CHECK (status IN ('ACTIVE', 'INACTIVE'))
+      rollback:
+        - dropTable:
+            tableName: floor

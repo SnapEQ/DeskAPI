@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-desk-table
+      author: WojciechBinkowski
+      changes:
+        - createTable:
+            tableName: desk
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_desk
+              - column:
+                  name: number
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uq_desk_number
+              - column:
+                  name: description
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: floor_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_desk_floor
+                    references: floor(id)
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: desk
+            indexName: idx_desk_floor_id
+            columns:
+              - column:
+                  name: floor_id
+        - sql:
+            sql: ALTER TABLE desk ADD CONSTRAINT ck_desk_status CHECK (status IN ('ACTIVE', 'INACTIVE'))
+      rollback:
+        - dropTable:
+            tableName: desk

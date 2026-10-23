@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class Reservation extends AuditableEntity {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter(AccessLevel.NONE)
     private ReservationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -51,5 +53,14 @@ public class Reservation extends AuditableEntity {
 
     @Column(name = "cancelled_at")
     private Instant cancelledAt;
+
+    @Version
+    @Column(nullable = false)
+    private Long version;
+
+    public void cancel(Instant cancelledAt) {
+        this.status = ReservationStatus.CANCELLED;
+        this.cancelledAt = cancelledAt;
+    }
 
 }

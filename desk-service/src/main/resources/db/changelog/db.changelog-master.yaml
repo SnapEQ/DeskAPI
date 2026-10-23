@@ -14,3 +14,6 @@ databaseChangeLog:
   - include:
       file: changes/005-reservation-unique-user-date-booked.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/006-add-version-floor-desk-reservation-tables.yaml
+      relativeToChangelogFile: true

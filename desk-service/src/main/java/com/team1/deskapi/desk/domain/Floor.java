@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +36,22 @@ public class Floor extends AuditableEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter(AccessLevel.NONE)
     private FloorStatus status;
+
+    @Version
+    @Column(nullable = false)
+    private Long version;
+
+    public boolean isActive() {
+        return this.status == FloorStatus.ACTIVE;
+    }
+
+    public void activate() {
+        this.status = FloorStatus.ACTIVE;
+    }
+
+    public void deactivate() {
+        this.status = FloorStatus.INACTIVE;
+    }
 }

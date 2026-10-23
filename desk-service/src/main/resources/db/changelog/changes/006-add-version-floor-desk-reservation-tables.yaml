@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-add-version-floor-desk-reservation-tables
+      author: WojciechBinkowski
+      changes:
+        - addColumn:
+            tableName: floor
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: desk
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: reservation
+            columns:
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: floor
+            columnName: version
+        - dropColumn:
+            tableName: desk
+            columnName: version
+        - dropColumn:
+            tableName: reservation
+            columnName: version

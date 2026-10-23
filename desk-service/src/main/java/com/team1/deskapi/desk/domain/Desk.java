@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,9 +46,22 @@ public class Desk extends AuditableEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter(AccessLevel.NONE)
     private DeskStatus status;
+
+    @Version
+    @Column(nullable = false)
+    private Long version;
 
     public boolean isActive() {
         return status == DeskStatus.ACTIVE;
+    }
+
+    public void activate() {
+        this.status = DeskStatus.ACTIVE;
+    }
+
+    public void deactivate() {
+        this.status = DeskStatus.INACTIVE;
     }
 }

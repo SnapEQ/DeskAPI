@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007-desk-unique-number-per-floor
+      author: WojciechBinkowski
+      changes:
+        - dropUniqueConstraint:
+            tableName: desk
+            constraintName: uq_desk_number
+        - addUniqueConstraint:
+            tableName: desk
+            columnNames: floor_id, number
+            constraintName: uq_desk_floor_number
+      rollback:
+        - dropUniqueConstraint:
+            tableName: desk
+            constraintName: uq_desk_floor_number
+        - addUniqueConstraint:
+            tableName: desk
+            columnNames: number
+            constraintName: uq_desk_number

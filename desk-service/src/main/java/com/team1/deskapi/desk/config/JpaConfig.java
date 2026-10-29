@@ -15,11 +15,6 @@ import java.util.Optional;
 public class JpaConfig {
 
     @Bean
-    Clock clock() {
-        return Clock.systemUTC();
-    }
-
-    @Bean
     DateTimeProvider auditingDateTimeProvider(Clock clock) {
         return () -> Optional.of(Instant.now(clock).truncatedTo(ChronoUnit.MICROS));
     }

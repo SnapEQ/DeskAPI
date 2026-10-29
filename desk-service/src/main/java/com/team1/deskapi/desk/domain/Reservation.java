@@ -39,7 +39,8 @@ public class Reservation extends AuditableEntity {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     @Setter(AccessLevel.NONE)
-    private ReservationStatus status;
+    @Builder.Default
+    private ReservationStatus status = ReservationStatus.BOOKED;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "desk_id", nullable = false)
@@ -56,11 +57,16 @@ public class Reservation extends AuditableEntity {
 
     @Version
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private Long version;
 
     public void cancel(Instant cancelledAt) {
         this.status = ReservationStatus.CANCELLED;
         this.cancelledAt = cancelledAt;
+    }
+
+    public boolean isBooked() {
+        return this.status == ReservationStatus.BOOKED;
     }
 
 }

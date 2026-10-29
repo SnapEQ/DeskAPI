@@ -41,6 +41,7 @@ public class Floor extends AuditableEntity {
 
     @Version
     @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private Long version;
 
     public boolean isActive() {

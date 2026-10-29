@@ -2,6 +2,7 @@ package com.team1.deskapi.desk.dtos.desk;
 
 import com.team1.deskapi.desk.domain.enums.DeskStatus;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public record DeskResponse(
@@ -9,6 +10,8 @@ public record DeskResponse(
         String number,
         String description,
         UUID floorId,
-        DeskStatus status
+        DeskStatus status,
+        Instant createdAt,
+        Instant updatedAt
 ) {
 }

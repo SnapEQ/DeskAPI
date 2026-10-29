@@ -17,3 +17,6 @@ databaseChangeLog:
   - include:
       file: changes/006-add-version-floor-desk-reservation-tables.yaml
       relativeToChangelogFile: true
+  - include:
+      file: changes/007-desk-unique-number-per-floor.yaml
+      relativeToChangelogFile: true
